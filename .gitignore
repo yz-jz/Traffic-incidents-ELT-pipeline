@@ -1,0 +1,15 @@
+__pycache__/
+.terraform/
+profiles.yml
+.user.yml
+env/
+logs/
+.log
+.env
+.parquet
+.tfstate
+.backup
+.old
+.lock.hcl
+src.zip
+k.json

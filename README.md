@@ -13,31 +13,22 @@ This project is designed as a cloud-native, scalable, and fully automated data p
 1. Cloud Infrastructure
 
 - Google Cloud Platform (GCP) : Fully cloud-based architecture
-
 - Google Cloud Storage (GCS) : Data lake for parquet data storage and source code deployment
-
 - Google Compute Engine (GCE) : Hosting Airflow for pipeline orchestration
-
 - BigQuery : Cloud-based data warehouse optimized for analytical workloads
-
 - Terraform : Infrastructure as Code (IaC) to provision and manage all cloud resources, including storage buckets, compute instances, cloud functions and firewall rules
 
 2. Workflow Orchestration
 
 - Apache Airflow : End-to-end orchestration of the ELT process using DAGs
-
 - Cosmos : Bridging Airflow and dbt for seamless transformation execution
 
 3. Data Processing & Ingestion
 
 - Python : Core programming language for data exctraction and processing
-
 - Polars : High-performance data manipulation library for fast transformations and data flattening 
-
 - Multithreading : Optimized API querying for parallelized data retrieval
-
 - Folium & Shapelt : Converting coordinates into plotted locations on an interactive map
-
 - Cosmos : Enabling interaction between Apache Airflow and dbt
 
 4. Data Transformation 
@@ -50,20 +41,16 @@ This project is designed as a cloud-native, scalable, and fully automated data p
 
 ## Pipeline Overview
 
-- The pipeline follows a structured ELT (Extract, Load, Transform) workflow, ensuring efficient data ingestion, transformation, and visualization:
+The pipeline follows a structured ELT (Extract, Load, Transform) workflow, ensuring efficient data ingestion,
+transformation, and visualization:
 
 1️⃣. Data Ingestion
 
 - Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes refer to doc
-
 - BBox Optimization: Large country-wide bboxes are split into sub-bboxes of 10,000 km² to comply with API constraints.
-
 - Parallel API Requests: Using multithreading, the system efficiently queries the API for incidents across multiple bboxes.
-
 - Extracted data is split into incidents metadata and coordinates data both saved as parquet files.
-
 - API Based Reverse Geocoding is applied to coordinates data constituting a zones lookup table for downstream optimizations
-
 - Raw data is stored in Data lake
 
 2. Data Loading

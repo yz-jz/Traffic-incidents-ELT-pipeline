@@ -24,33 +24,33 @@ This project is designed as a cloud-native, scalable, and fully automated data p
 
 2. Workflow Orchestration
 
-Apache Airflow : End-to-end orchestration of the ELT process using DAGs
+- Apache Airflow : End-to-end orchestration of the ELT process using DAGs
 
-Cosmos : Bridging Airflow and dbt for seamless transformation execution
+- Cosmos : Bridging Airflow and dbt for seamless transformation execution
 
 3. Data Processing & Ingestion
 
-Python : Core programming language for data exctraction and processing
+- Python : Core programming language for data exctraction and processing
 
-Polars : High-performance data manipulation library for fast transformations and data flattening 
+- Polars : High-performance data manipulation library for fast transformations and data flattening 
 
-Multithreading : Optimized API querying for parallelized data retrieval
+- Multithreading : Optimized API querying for parallelized data retrieval
 
-Folium & Shapelt : Converting coordinates into plotted locations on an interactive map
+- Folium & Shapelt : Converting coordinates into plotted locations on an interactive map
 
-Cosmos : Enabling interaction between Apache Airflow and dbt
+- Cosmos : Enabling interaction between Apache Airflow and dbt
 
 4. Data Transformation 
 
-dbt (Data Build Tool) : Automated SQL-based transformations in BigQuery, ensuring structured and optimized data models
+- dbt (Data Build Tool) : Automated SQL-based transformations in BigQuery, ensuring structured and optimized data models
 
 5. Visualization
 
-Looker : Cloud-native BI platform for interactive data visualization
+- Looker : Cloud-native BI platform for interactive data visualization
 
 ## Pipeline Overview
 
-The pipeline follows a structured ELT (Extract, Load, Transform) workflow, ensuring efficient data ingestion, transformation, and visualization:
+- The pipeline follows a structured ELT (Extract, Load, Transform) workflow, ensuring efficient data ingestion, transformation, and visualization:
 
 1️⃣. Data Ingestion
 
@@ -72,8 +72,7 @@ The pipeline follows a structured ELT (Extract, Load, Transform) workflow, ensur
 
 4. Data Transformation with dbt
 
-SQL-Based Transformations: dbt is used to process the data, including:
-
+- SQL-Based Transformations
 - Data enrichment
 - Data cleaning
 - Aggregations
@@ -98,18 +97,6 @@ filter bboxes
 
 pubsub trigger cloud function
 
-SELECT parse_datetime("%FT%H:%M:%SZ", startTime) FROM `central-catcher-448814-j1.ti_tst25319.incidents_data` LIMIT 1000
-
-select (select direction from unnest([tmc])) as code FROM `central-catcher-448814-j1.ti_tst25319.incidents_data` LIMIT 1000
-
-SELECT
-  element.code,
-  element.description,
-  element.iconCategory
-FROM `central-catcher-448814-j1.ti_tst25319.incidents_data`,
-UNNEST(events.list) AS list,  -- First, unnest the list
-UNNEST([list.element]) AS element  -- Then, unnest the nullable struct as an array
-LIMIT 1000;
 
 MEntion partitionning and clustering in doc and in dbt
 

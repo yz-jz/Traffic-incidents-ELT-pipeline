@@ -85,6 +85,7 @@ transformation, and visualization:
 
     *Orchestration with Cosmos & Airflow: dbt runs within Airflow via Cosmos, ensuring automated execution within DAGs*
 
+[Pipeline Overview](docs/Pipeline_overview.png)
 
 Get countries bboxes
 

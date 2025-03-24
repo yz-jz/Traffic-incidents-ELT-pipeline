@@ -83,9 +83,9 @@ transformation, and visualization:
 
 - Looker Dashboard: A dashboard is created in Looker with interactive visualizations
 
-    *Orchestration with Cosmos & Airflow: dbt runs within Airflow via Cosmos, ensuring automated execution within DAGs*
+*NB : Orchestration with Cosmos & Airflow: dbt runs within Airflow via Cosmos, ensuring automated execution within DAGs*
 
-[Pipeline Overview](./docs/Pipeline_overview.png)
+![Pipeline Overview](./docs/Pipeline_overview.png)
 
 Get countries bboxes
 

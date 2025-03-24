@@ -3,7 +3,7 @@
 This section of the project uses Terraform to provision cloud infrastructure resources. It includes configuration for creating and managing resources such as storage buckets, virtual machines, and other GCP services required for the project's deployment.
 
 ## Provisionned resources :
-### 1. DataLake bucket : Terraform creates data lake bucket for storage of raw extracted data before loading to BigQuery
+  1. DataLake bucket : Terraform creates data lake bucket for storage of raw extracted data before loading to BigQuery
 ```terraform 
 resource "google_storage_bucket" "datalake_bucket" {
   name = var.datalake_bucket_name
@@ -12,7 +12,7 @@ resource "google_storage_bucket" "datalake_bucket" {
   force_destroy = true
 }
 ```
-### 2. Deployment bucket : Terraform creates a bucket and uploads source code necessary for airflow deployment
+2. Deployment bucket : Terraform creates a bucket and uploads source code necessary for airflow deployment
 ```terraform 
 resource "google_storage_bucket" "deployment_bucket" {
   name = var.deployment_bucket_name
@@ -29,7 +29,7 @@ resource "google_storage_bucket_object" "compute_engine_folder" {
   bucket = google_storage_bucket.deployment_bucket.name
 }
 ```
-### 3. BigQuery Dataset: Terraform creates dataset as a centralized location where structured and semi-structured data can be stored, processed, and queried.
+3. BigQuery Dataset: Terraform creates dataset as a centralized location where structured and semi-structured data can be stored, processed, and queried.
 
 ```terraform
 resource "google_bigquery_dataset" "dataset" {
@@ -91,23 +91,4 @@ curl -sSL install.astronomer.io | sudo bash -s
 gsutil cp 'gs://${google_storage_bucket.deployment_bucket.name}/src.zip' /home/airflow
 cd /home/airflow
 unzip src.zip && cd src/airflow && yes | astro dev init && sudo astro dev start --wait 30m
-```
-### 4. Firewall rule: Enabling port forwarding to access **airflow UI** on port **8080**
-
-```terraform
-resource "google_compute_firewall" "allow_airflow" {
-  name = "airflow"
-  network = "default"
-
-  allow {
-    protocol = "tcp"
-    ports = ["8080"]
-  }
-
-  # Reference the compute instance tag to apply firewall rule
-  target_tags = ["airflow"]
-  source_ranges = [var.ip_address]
-}
-
-
 ```

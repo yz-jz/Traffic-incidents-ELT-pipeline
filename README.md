@@ -92,6 +92,18 @@ transformation, and visualization:
 Follow the steps below to set up, run, and monitor the Traffic Incidents ELT Data Pipeline. 
 Assuming you have access to the necessary cloud resources and API keys.
 
+or
+
+Set up the project with Make, just make sure to provide correct information
+
+```bash
+# Build the project
+make build
+
+# Destroy the project 
+make destroy
+```
+
 ### Prerequisites
 
 - **Google Cloud Platform (GCP) account** with permissions to create and manage resources (BigQuery, GCS, Compute Engine, etc.)
@@ -130,7 +142,7 @@ Terraform picks up different variables necessary for deployment from your enviro
     export TF_VAR_project_id=your_project_id
     export TF_VAR_region=region_of_your_choice
     export TF_VAR_zone=zone_of_your_choice
-    export TF_VAR_ssh_user=ssh_user
+    export TF_VAR_ssh_user='airflow'
     export TF_VAR_ssh_key=path/to/ssh_public_key.pub
     export TF_VAR_ip_address=your_public_ip_address # Used to access airflow UI through ssh tunnel
     export TF_VAR_deployment_bucket_name=your_bucket_name # Must be unique

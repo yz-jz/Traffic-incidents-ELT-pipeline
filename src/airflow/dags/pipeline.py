@@ -79,11 +79,7 @@ def traffic_incidents_pipeline():
 
         with ThreadPoolExecutor(max_workers=5) as executor:
             function = partial(fetch_incidents_data, key=tomtom_key)
-            list(executor.map(function,bboxes[:2500]))
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            # Function is fetch_incidents_data with key already provided as map takes one argument
-            function = partial(fetch_incidents_data, key=tomtom_key2)
-            list(executor.map(function, bboxes[2500:]))
+            list(executor.map(function,bboxes))
 
         df_data = pl.DataFrame(incidents_data).unnest("properties")
         df_coordinates = df_data.select(["id", "coordinates","server"])
@@ -145,15 +141,7 @@ def traffic_incidents_pipeline():
         with ThreadPoolExecutor(max_workers=2) as executor:
             function = partial(fetch_zone, key=locationIQ_key)
             #function = partial(fetch_zone, key=locationIQ_key)
-            list(executor.map(function, coordinates_list[:5000]))
-
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            function = partial(fetch_zone, key=locationIQ_key2)
-            list(executor.map(function, coordinates_list[5001:10001]))
-
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            function = partial(fetch_zone, key=locationIQ_key3)
-            list(executor.map(function, coordinates_list[10001:]))
+            list(executor.map(function, coordinates_list))
 
         try:
             zones_df = pl.DataFrame(zones_data).unnest("address")

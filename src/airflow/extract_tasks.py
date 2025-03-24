@@ -23,12 +23,8 @@ bucket_name = os.getenv("BUCKET_NAME")
 dataset_name = os.getenv("DATASET_NAME")
 # Api keys
 tomtom_key = os.getenv("TOMTOM_KEY")
-tomtom_key2 = os.getenv("TOMTOM_KEY2")
 
 locationIQ_key = os.getenv("LOCATIONIQ_KEY")
-locationIQ_key2 = os.getenv("LOCATIONIQ_KEY2")
-locationIQ_key3 = os.getenv("LOCATIONIQ_KEY3")
-locationIQ_key4 = os.getenv("LOCATIONIQ_KEY4")
 
 # Load json file to bbox variable
 with open("sub_bounding_boxes.json", "r") as file:

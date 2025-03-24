@@ -8,7 +8,6 @@ build:
 	read -p "Enter your project_id : " project_id; \
 	read -p "Enter region : " region; \
 	read -p "Enter zone : " zone; \
-	read -p "Enter user for ssh key : " ssh_user; \
 	read -p "Enter your public IP address : " ip_address; \
 	read -p "Enter bucket name (deployment) : " deployment_bucket_name; \
 	read -p "Enter bucket name (datalake) : " datalake_bucket_name; \
@@ -22,7 +21,7 @@ build:
 	echo "Generating SSH key $$HOME/.ssh/gcp_key ..."; \
 	sleep 0.5; \
 	if [ ! -f ~/.ssh/gcp_key ]; then \
-		ssh-keygen -t rsa -b 4096 -f $$HOME/.ssh/gcp-key -C "$$ssh_user"; \
+		ssh-keygen -t rsa -b 4096 -f $$HOME/.ssh/gcp-key -C "airflow_instance"; \
 		echo "Key generated successfully"; \
 	else  \
 		echo "Key already exists"; \
@@ -36,7 +35,7 @@ build:
 	export TF_VAR_project_id=$$project_id; \
 	export TF_VAR_region=$$region; \
 	export TF_VAR_zone=$$zone; \
-	export TF_VAR_ssh_user=$$ssh_user; \
+	export TF_VAR_ssh_user='airflow'; \
 	export TF_VAR_ssh_key=$$ssh_key; \
 	export TF_VAR_ip_address=$$ip_address; \
 	export TF_VAR_deployment_bucket_name=$$deployment_bucket_name; \

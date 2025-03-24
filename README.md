@@ -39,10 +39,10 @@ This project is designed as a cloud-native, scalable, and fully automated data p
 
     - Looker : Cloud-native BI platform for interactive data visualization
 
-## Dataset Used  
+## Data Used  
 This dataset contains **reported traffic incidents**, including details such as **incident type, severity, location, and timestamps**. The data is retrieved using the **TomTom Traffic Incidents API**, which provides real-time and historical incident reports based on predefined geographical bounding boxes (bboxes).  
 
-To enrich the dataset with human-readable locations, the **LocationIQ API** is used for **reverse geocoding**, converting raw latitude and longitude coordinates into city names, street names, and administrative regions.  
+To enrich the dataset with human-readable locations, the **LocationIQ API** is used for **reverse geocoding**, converting raw latitude and longitude coordinates into city names, street names, and administrative regions.
 
 By integrating these APIs, the pipeline ensures a structured and enriched dataset
 
@@ -54,36 +54,36 @@ transformation, and visualization:
 
 ### 1. Data Ingestion
 
-    - Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes refer to doc
-    - BBox Optimization: Large country-wide bboxes are split into sub-bboxes of 10,000 km² to comply with API constraints.
-    - Parallel API Requests: Using multithreading, the system efficiently queries the API for incidents across multiple bboxes.
-    - Extracted data is split into incidents metadata and coordinates data both saved as parquet files.
-    - API Based Reverse Geocoding is applied to coordinates data constituting a zones lookup table for downstream optimizations
-    - Raw data is stored in Data lake
+- Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes refer to doc
+- BBox Optimization: Large country-wide bboxes are split into sub-bboxes of 10,000 km² to comply with API constraints.
+- Parallel API Requests: Using multithreading, the system efficiently queries the API for incidents across multiple bboxes.
+- Extracted data is split into incidents metadata and coordinates data both saved as parquet files.
+- API Based Reverse Geocoding is applied to coordinates data constituting a zones lookup table for downstream optimizations
+- Raw data is stored in Data lake
 
 ### 2. Data Loading
 
-    - Data is transferred from GCS to BigQuery, ensuring efficient storage for analytical queries.
+- Data is transferred from GCS to BigQuery, ensuring efficient storage for analytical queries.
 
 ### 4. Data Transformation with dbt
 
-    - Data Transformation :
+- Data Transformation :
 
-        - SQL-Based Transformations
-        - Data enrichment
-        - Data cleaning
-        - Aggregations
+    - SQL-Based Transformations
+    - Data enrichment
+    - Data cleaning
+    - Aggregations
 
-    - Partitioning & Clustering for Performance Optimization:
+- Partitioning & Clustering for Performance Optimization:
 
-        - Partitioning: Tables are partitioned by incident start_time to improve query efficiency.
-        - Clustering: Tables are clustered by country, incident_cause and magnitude_of_delay to optimize storage and retrieval speeds.
+    - Partitioning: Tables are partitioned by incident start_time to improve query efficiency.
+    - Clustering: Tables are clustered by country, incident_cause and magnitude_of_delay to optimize storage and retrieval speeds.
 
 ### 5. Data Visualization
 
-    - Looker Dashboard: A dashboard is created in Looker with interactive visualizations
+- Looker Dashboard: A dashboard is created in Looker with interactive visualizations
 
-        *Orchestration with Cosmos & Airflow: dbt runs within Airflow via Cosmos, ensuring automated execution within DAGs*
+    *Orchestration with Cosmos & Airflow: dbt runs within Airflow via Cosmos, ensuring automated execution within DAGs*
 
 
 Get countries bboxes

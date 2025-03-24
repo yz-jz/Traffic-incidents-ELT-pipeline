@@ -54,7 +54,7 @@ transformation, and visualization:
 
 ### 1. Data Ingestion
 
-- Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes refer to doc.
+- Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes ([documentation](./docs/prerequisites/README.md)).
 - BBox Optimization: Large country-wide bboxes are split into sub-bboxes of 10,000 km² to comply with API constraints.
 - Parallel API Requests: Using multithreading, the system efficiently queries the API for incidents across multiple bboxes.
 - Extracted data is split into incidents metadata and coordinates data both saved as parquet files.
@@ -193,11 +193,11 @@ ssh -i /path/to/private_key -L 8080:127.0.0.1:8080 airflow@{IP_address_of_comput
 ```
 Now you can Run, Visualize and monitor your DAG
 
-![DAG Graph](./docs/DAG_t.png)
+![DAG Graph](./docs/airflow/DAG_t.png)
 
 
-![EL Graph](./docs/DAG.png)
+![EL Graph](./docs/airflow/DAG.png)
 
-![T Graph](./docs/DAG_transform.png)
+![T Graph](./docs/airflow/DAG_transform.png)
 
 https://lookerstudio.google.com/s/j7yhOMsJhHk

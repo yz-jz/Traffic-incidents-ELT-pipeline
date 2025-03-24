@@ -5,7 +5,7 @@
 {{
  config(
    partition_by = {'field': 'start_time', 'data_type': 'datetime'},
-	 cluster_by = ["incident_cause", "magnitude_of_delay", "country", "city"]
+	 cluster_by = ["incident_cause", "incident_cause", "country", "city"]
  )
 }}
 

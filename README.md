@@ -40,7 +40,7 @@ This project is designed as a cloud-native, scalable, and fully automated data p
     - Looker : Cloud-native BI platform for interactive data visualization
 
 ## Data Used  
-This dataset contains **reported traffic incidents**, including details such as **incident type, severity, location, and timestamps**. The data is retrieved using the **TomTom Traffic Incidents API**, which provides real-time and historical incident reports based on predefined geographical bounding boxes (bboxes).  
+This dataset contains **reported traffic incidents**, including details such as **incident type, severity, location, and timestamps**. The data is retrieved using the **TomTom Traffic Incidents API**, which provides real-time and historical incident reports based on predefined geographical bounding boxes (bboxes).
 
 To enrich the dataset with human-readable locations, the **LocationIQ API** is used for **reverse geocoding**, converting raw latitude and longitude coordinates into city names, street names, and administrative regions.
 
@@ -76,8 +76,8 @@ transformation, and visualization:
 
 - Partitioning & Clustering for Performance Optimization:
 
-    - Partitioning: Tables are partitioned by incident start_time to improve query efficiency.
-    - Clustering: Tables are clustered by country, incident_cause and magnitude_of_delay to optimize storage and retrieval speeds.
+    - Partitioning: Tables are partitioned by incident start_time to improve query efficiency, allowing BigQuery to reduce data scans to relevant partitions.
+    - Clustering: Tables are clustered by country, incident_cause and magnitude_of_delay which are frequently filtered to optimize storage and retrieval speeds.
 
 ### 5. Data Visualization
 
@@ -131,7 +131,7 @@ ssh-keygen -t rsa -b 4096 -C "user"
 
 ### 3. Set Up Environment Variables
 
-Terraform picks up different variables necessary for deployment from your environment, this way ensures you don't have to modify different files in order to make this work.
+Terraform picks up different variables necessary for deployment from your environment, this way ensures you don't have to modify different files in order to make this work. ([documentation](./docs/terraform/README.md))
 (Ensure that all variables have TF_VAR prefix)
 
  - In your terminal :
@@ -195,9 +195,7 @@ Now you can Run, Visualize and monitor your DAG
 
 ![DAG Graph](./docs/airflow/DAG_t.png)
 
-
 ![EL Graph](./docs/airflow/DAG.png)
 
 ![T Graph](./docs/airflow/DAG_transform.png)
 
-https://lookerstudio.google.com/s/j7yhOMsJhHk

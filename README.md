@@ -44,7 +44,7 @@ This dataset contains **reported traffic incidents**, including details such as 
 
 To enrich the dataset with human-readable locations, the **LocationIQ API** is used for **reverse geocoding**, converting raw latitude and longitude coordinates into city names, street names, and administrative regions.
 
-By integrating these APIs, the pipeline ensures a structured and enriched dataset
+By integrating these APIs, the pipeline ensures a structured and enriched dataset.
 
 ## Pipeline Overview
 
@@ -54,12 +54,12 @@ transformation, and visualization:
 
 ### 1. Data Ingestion
 
-- Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes refer to doc
+- Geodata partitionning as a prerequisite, traffic incident data is retrieved using API calls that require predefined bounding boxes refer to doc.
 - BBox Optimization: Large country-wide bboxes are split into sub-bboxes of 10,000 km² to comply with API constraints.
 - Parallel API Requests: Using multithreading, the system efficiently queries the API for incidents across multiple bboxes.
 - Extracted data is split into incidents metadata and coordinates data both saved as parquet files.
-- API Based Reverse Geocoding is applied to coordinates data constituting a zones lookup table for downstream optimizations
-- Raw data is stored in Data lake
+- API Based Reverse Geocoding is applied to coordinates data constituting a zones lookup table for downstream optimizations.
+- Raw data is stored in Data lake.
 
 ### 2. Data Loading
 
@@ -87,26 +87,104 @@ transformation, and visualization:
 
 ![Pipeline Overview](./docs/Pipeline_overview.png)
 
-Get countries bboxes
+## Build Instructions
 
-generate bboxes
+Follow the steps below to set up, run, and monitor the Traffic Incidents ELT Data Pipeline. 
+Assuming you have access to the necessary cloud resources and API keys.
 
-plot bboxes
+### Prerequisites
 
-mention overlap
+- **Google Cloud Platform (GCP) account** with permissions to create and manage resources (BigQuery, GCS, Compute Engine, etc.)
+- **Google Cloud Platform (GCP) serviceaccount** key downloaded in your local machine
+- **Terraform** installed for Infrastructure as Code (IaC) provisioning
+- **Python 3.x** installed along with required libraries (polars, folium, shapely)
 
-#TODO explain no code
-filter bboxes 
+### 1. Clone the Repository
 
-pubsub trigger cloud function
+Start by cloning the repository to your local machine:
+
+``` bash
+git clone https://github.com/yz-jz/Traffic-incidents-ELT-pipeline.git
+cd Traffic-incidents-ELT-pipeline
+```
+
+then move your serviceaccount.json to Traffic-incidents-ELT-pipeline/
+
+### 2. Generate SSH key
+You need to generate an SSH key in order to connect to the GCP compute instance provided with terraform (this key will be passed to terraform file from env variables)
+
+``` bash
+ssh-keygen -t rsa -b 4096 -C "user"
+```
+
+### 3. Set Up Environment Variables
+
+Terraform picks up different variables necessary for deployment from your environment, this way ensures you don't have to modify different files in order to make this work.
+(Ensure that all variables have TF_VAR prefix)
+
+ - In your terminal :
+
+    ``` bash
+    export TF_VAR_gcp_key=path/to/service_account.json
+    export TF_VAR_service_account=serviceaccount # the part of email before '@' provided by gcp in IAM & admin/serviceaccounts
+    export TF_VAR_project_id=your_project_id
+    export TF_VAR_region=region_of_your_choice
+    export TF_VAR_zone=zone_of_your_choice
+    export TF_VAR_ssh_user=ssh_user
+    export TF_VAR_ssh_key=path/to/ssh_public_key.pub
+    export TF_VAR_ip_address=your_public_ip_address # Used to access airflow UI through ssh tunnel
+    export TF_VAR_deployment_bucket_name=your_bucket_name # Must be unique
+    export TF_VAR_datalake_bucket_name=your_bucket_name2# Must be unique
+    export TF_VAR_dataset_name=your_dataset_name
+    ```
+ - Create file src/airflow/.env :
+    
+    This file will be picked up by docker container and will provide necessary variables for cosmos (airflow & dbt)
+        ```bash 
+        TOMTOM_KEY=YOUR_TOMTOM_ACCESS_KEY
+        LOCATIONIQ_KET=YOUR_LOCATIONIQ_ACCESS_KEY
+
+        BUCKETNAME=YOUR_BUCKER_NAME
+        DATASET_NAME=YOUR_DATASET_NAME
+
+        AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT=google-cloud-platform://?extra__google_cloud_platform__project={YOUR_PROJECT_ID}&extra__google_cloud_platform__key_path=/usr/local/airflow/k.json
+
+        DBT_BIGQUERY_PROJECT=YOUR_PROJECT_ID
+        DBT_BIGQUERY_DATASET=YOUR_DATASET_NAME
+        ```
+
+### 4. Set Up Cloud Infrastructure
+
+Terraform is used to manage the pipeline's infrastructure, running the following commands will provision all the necessary components to make it work with minimal set-up.
+
+First start by zipping the src/ folder, terraform will upload it to a bucket then provision a compute instance with a startup script that will install required dependencies, init cosmos project and start airflow.
+
+``` bash
+zip -r src.zip src/airflow
+```
+
+Now change directory to terraform/ and run the following commands to create resources :
+
+```bash
+cd terraform
+terraform init
+terraform apply -auto-approve
+```
+
+### 5. Trigger DAG
+
+Since your compute instance is running airflow, you can access it via localhost:8080 as terraform has also created a firewall rule to allow tcp traffic to port 8080.
+But first run the following command :
+```bash
+ssh -i /path/to/private_key -L 8080:127.0.0.1:8080 airflow@{IP_address_of_compute_instance}
+```
+Now you can Run, Visualize and monitor your DAG
+
+![DAG Graph](./docs/DAG_t.png)
 
 
-MEntion partitionning and clustering in doc and in dbt
+![EL Graph](./docs/DAG.png)
 
-#export env vars for dbt and airflow
-
-curl -sSL install.astronomer.io | sudo bash -s
-
-add to make dockerfile gen with env vars
+![T Graph](./docs/DAG_transform.png)
 
 https://lookerstudio.google.com/s/j7yhOMsJhHk

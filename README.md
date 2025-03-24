@@ -137,10 +137,11 @@ Terraform picks up different variables necessary for deployment from your enviro
     export TF_VAR_datalake_bucket_name=your_bucket_name2# Must be unique
     export TF_VAR_dataset_name=your_dataset_name
     ```
- - Create file src/airflow/.env :
-    
+ - Create file src/airflow/.env : 
+
     This file will be picked up by docker container and will provide necessary variables for cosmos (airflow & dbt)
-        ```bash 
+
+    ```bash 
         TOMTOM_KEY=YOUR_TOMTOM_ACCESS_KEY
         LOCATIONIQ_KET=YOUR_LOCATIONIQ_ACCESS_KEY
 
@@ -151,7 +152,7 @@ Terraform picks up different variables necessary for deployment from your enviro
 
         DBT_BIGQUERY_PROJECT=YOUR_PROJECT_ID
         DBT_BIGQUERY_DATASET=YOUR_DATASET_NAME
-        ```
+    ```
 
 ### 4. Set Up Cloud Infrastructure
 

@@ -17,11 +17,11 @@ resource "google_storage_bucket" "deployment_bucket" {
 
 # Cloud functions bucket
 # Source codes 
-resource "google_storage_bucket" "cloud_function_bucket" {
-  name = var.cloud_function_bucket_name
-  location = var.location
-  force_destroy = true
-}
+#resource "google_storage_bucket" "cloud_function_bucket" {
+#  name = var.cloud_function_bucket_name
+#  location = var.location
+#  force_destroy = true
+#}
 
 # Folder for airflow deployment
 resource "google_storage_bucket_object" "compute_engine_folder" {

@@ -204,5 +204,5 @@ Now you can Run, Visualize and monitor your DAG
 Proportions tile + Temporal line distribution tile as required in dezoomcamp project guidlines
 ![Dashboard](./docs/dashboard.png)
 
-![Link](https://lookerstudio.google.com/s/j7yhOMsJhHk)
+[Link](https://lookerstudio.google.com/s/j7yhOMsJhHk)
 

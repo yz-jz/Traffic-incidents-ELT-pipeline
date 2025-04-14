@@ -198,11 +198,3 @@ Now you can Run, Visualize and monitor your DAG
 ![EL Graph](./docs/airflow/DAG.png)
 
 ![T Graph](./docs/airflow/DAG_transform.png)
-
-## Dashboard
-
-Proportions tile + Temporal line distribution tile as required in dezoomcamp project guidlines
-![Dashboard](./docs/dashboard.png)
-
-[Link](https://lookerstudio.google.com/s/j7yhOMsJhHk)
-
